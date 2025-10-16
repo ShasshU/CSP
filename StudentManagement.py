@@ -1,69 +1,128 @@
-managementList = []
 
-print("Student Management System")
-print("Choose one of the following: ")
-print("1. Add Student")
-print("2. Display all students")
-print("3. Find student by ID")
-print("4. Remove student by ID")
-print("5. Update student grade")
-print("6. Exit")
+student_names = []
+student_ids = []
+student_grades = []
 
-userChoice = input("Choose an option: ")
 
-if userChoice == "1":
-    name = input("Enter student name: ")
-    ID = input("Enter student ID: ")
-    grade = input("Enter students grade: ")
+def start_display():
+    print("Student Management System")
+    print("")
+    print("Choose one of the following:")
+    print("1. Add Student")
+    print("2. Display All Students")
+    print("3. Find Student by ID")
+    print("4. Remove Student by ID")
+    print("5. Update Student Grade")
+    print("6. Exit")
 
-    managementList.append(ID)
-    managementList.append(name)
-    managementList.append(grade)
 
-elif userChoice == "2":
-    print(managementList)
+def add_student(name, student_id, grade):
 
-elif userChoice == "3":
-    findStudent = input("Find student by ID")
-    if findStudent in managementList:
-        index = managementList.index(findStudent)
-        print("ID: " + managementList[index])
-        print("Name: " + managementList[index + 1])
-        print("Grade: " + managementList[index + 2])
+    # Check if student ID already exists
+    if student_id in student_ids:
+        print(f"Error: Student ID {student_id} already exists!")
+        return
+    
+    # Add student data to respective lists
+    student_names.append(name)
+    student_ids.append(student_id)
+    student_grades.append(grade)
+    
+    print(f"Student added successfully!")
+
+
+def display_all_students():
+
+    if len(student_ids) == 0:
+        print("\nNo students in the system.")
+        return
+    
+    print("\n" + "-"*50)
+    for i in range(len(student_ids)):
+        print(f"ID: {student_ids[i]}, Name: {student_names[i]}, Grade: {student_grades[i]}")
+    print("-"*50)
+
+
+def find_student_by_id(student_id):
+    
+    if student_id in student_ids:
+        index = student_ids.index(student_id)
+        print(f"\nID: {student_ids[index]}, Name: {student_names[index]}, Grade: {student_grades[index]}")
     else:
-        print("Student not found")
+        print(f"\nStudent not found.")
 
-elif userChoice == "4":
-    removeStudent = input("Enter an ID to comment")
-    if removeStudent in managementList:
-        index = managementList.index(removeStudent)
-        managementList.pop(index)
-        managementList.pop(index)
-        managementList.pop(index)
-        print("Student removed")
-    else:
-        print("Student not found")
 
-elif userChoice == "5":
-    updateStudent = input("Enter student ID to update grade")
-    if updateStudent in managementList:
-        index = managementList.index(updateStudent)
-        newGrade = input("Enter students new grade")
-        managementList[index + 2] = newGrade
-        print("Grade updated")
-    else:
-        print("Student not found")
-
-elif userChoice == "6":
-    print("Exiting program")
-    exit()
-
-else:
-    print("Invalid choice, please try again and enter a number between 1-6")
+def remove_student_by_id(student_id):
+    
+    if student_id in student_ids:
+        index = student_ids.index(student_id)
         
+        # Remove from all lists
+        student_names.pop(index)
+        student_ids.pop(index)
+        student_grades.pop(index)
+        
+        print(f"\nStudent removed successfully!")
+    else:
+        print(f"\nStudent not found.")
 
 
+def update_student_grade(student_id, new_grade):
+   
+    if student_id in student_ids:
+        index = student_ids.index(student_id)
+        student_grades[index] = new_grade
+        print(f"\nGrade updated successfully!")
+    else:
+        print(f"\nStudent not found.")
 
 
+def main():
+    
+    while True:
+        start_display()
+        
+        # Get user's menu choice
+        choice = input("\nChoose an option: ").strip()
+        
+        if choice == '1':
+            # Add Student
+            name = input("Enter student name: ")
+            student_id = int(input("Enter student ID: "))
+            grade = float(input("Enter student grade: "))
+            
+            add_student(name, student_id, grade)
+        
+        elif choice == '2':
+            # Display All Students
+            display_all_students()
+        
+        elif choice == '3':
+            # Find Student by ID
+            student_id = int(input("Enter student ID to find: "))
+            find_student_by_id(student_id)
+        
+        elif choice == '4':
+            # Remove Student by ID
+            student_id = int(input("Enter student ID to remove: "))
+            remove_student_by_id(student_id)
+        
+        elif choice == '5':
+            # Update Student Grade
+            student_id = int(input("Enter student ID to update grade: "))
+            new_grade = float(input("Enter new grade: "))
+            update_student_grade(student_id, new_grade)
+        
+        elif choice == '6':
+            # Exit program
+            print("\nExiting program...")
+            break
+        
+        else:
+            # Handle invalid menu choice
+            print("\nInvalid choice! Please enter a number between 1 and 6.")
 
 
+# Run the program
+if __name__ == "__main__":
+    main()
