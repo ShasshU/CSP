@@ -160,7 +160,7 @@ def load_question():
                         relief=tk.RAISED, bd=2, cursor="hand2",
                         padx=10, pady=8, anchor="w")
         btn.pack(pady=3, padx=10, fill=tk.X)
-        btn.bind("<Button-1>", lambda e, c=choice: select_choice(c))
+        btn.bind("<Button-1>", lambda _, c=choice: select_choice(c))
         choice_buttons.append(btn)
 
 
